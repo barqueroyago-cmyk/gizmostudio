@@ -63,9 +63,10 @@
   --line: oklch(0.86 0.015 80);
   --line-dark: oklch(0.32 0.008 60);
 
-  /* accent */
-  --accent: oklch(0.7 0.18 45);
-  --accent-foreground: oklch(0.14 0.005 60);
+  /* accent — primary blue */
+  --accent: #3366FF;
+  --accent-foreground: oklch(0.98 0 0);
+
 
   /* shadcn semantic */
   --background: var(--cream);
