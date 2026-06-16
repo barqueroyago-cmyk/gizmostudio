@@ -100,15 +100,25 @@
   ::selection { background: var(--accent); color: var(--ink); }
 }
 
-@utility serif { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; }
+@utility serif { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
+@utility hand  { font-family: var(--font-hand); font-weight: 500; letter-spacing: 0.01em; }
 @utility mono  { font-family: var(--font-mono); }
 
 @utility headline {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
 }
+
+@utility texture-bg {
+  background-image: url("/__l5e/assets-v1/81aa144a-fc98-4aca-9d6c-bf67e31f1b05/texture-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--cream);
+}
+
 
 @utility eyebrow {
   font-family: var(--font-sans);
