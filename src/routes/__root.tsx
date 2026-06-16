@@ -77,10 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Waviboy Academy — From zero to paid brand work in 60 days" },
-      { name: "description", content: "Become the AI creative director brands hire. Taste, tools, automation and monetisation in one membership." },
-      { property: "og:title", content: "Waviboy Academy" },
-      { property: "og:description", content: "From zero to paid brand work in 60 days." },
+      { title: "GIZMO STUDIO — AI Creative Direction & Visual Systems" },
+      { name: "description", content: "From zero to your first paid brand client with AI. By GIZMO STUDIO." },
+      { property: "og:title", content: "GIZMO STUDIO" },
+      { property: "og:description", content: "From zero to your first paid brand client with AI." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -90,10 +90,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
