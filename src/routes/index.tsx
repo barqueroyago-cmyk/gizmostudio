@@ -103,6 +103,7 @@ type Dict = {
   pricingEyebrow: string;
   pricingHeadA: string;
   pricingHeadB: string;
+  pricingHeadC: string;
   payFull: string;
   paySplit: string;
   founding: string;
