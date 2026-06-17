@@ -253,7 +253,6 @@ const EN: Dict = {
   pricingHeadA: "Lock in the ",
   pricingHeadB: "founding",
   pricingHeadC: " price.",
-  pricingHeadC: " price.",
   payFull: "Pay in full",
   paySplit: "4× payments",
   founding: "GIZMO STUDIO — Founding access",
