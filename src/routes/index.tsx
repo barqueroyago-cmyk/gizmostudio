@@ -58,6 +58,7 @@ type Dict = {
   barriersEyebrow: string;
   barriersHeadA: string;
   barriersHeadB: string;
+  barriersHeadC: string;
   barriers: string[];
   barriersHand1: string;
   barriersHand2: string;
