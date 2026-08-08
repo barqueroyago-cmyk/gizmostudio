@@ -480,7 +480,9 @@ function Placeholder({
   rotate = 0,
   madeWithAI = "★ Made with AI",
   src,
+  video,
   showLabel = false,
+
 }: {
   label: string;
   className?: string;
