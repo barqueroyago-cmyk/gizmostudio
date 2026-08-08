@@ -9,6 +9,8 @@ import {
 import textureAsset from "@/assets/texture-bg.png.asset.json";
 import gzLogo from "@/assets/gz-logo.png.asset.json";
 import { IMG, SHOWCASE, CANT_TELL, STUDENTS, TESTIMONIALS, CHROME, PROOF } from "@/assets/wb";
+import { VID, STUDENT_VIDEOS } from "@/assets/wbv";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -725,7 +727,7 @@ function Landing() {
 
             <aside className="lg:col-span-4 grid grid-cols-2 gap-3 content-start">
               <div className="col-span-2">
-                <Placeholder label="Hero portrait" src={IMG["photos__students__xanthe__boxer-opt.webp"]} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} showLabel />
+                <Placeholder label="Hero video" video={VID.hero} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} showLabel />
               </div>
               <Placeholder label="still 03" src={SHOWCASE[1]} ratio="aspect-square" tone="chrome" rotate={-3} madeWithAI={t.madeWithAI} />
               <Placeholder label="editorial 04" src={SHOWCASE[2]} ratio="aspect-square" tone="ink" rotate={3} madeWithAI={t.madeWithAI} />
@@ -892,7 +894,18 @@ function Landing() {
             {t.workHeadA}<span className="text-[var(--accent)]">{t.workHeadB}</span>
           </h2>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {STUDENT_VIDEOS.map((v, i) => (
+              <Placeholder
+                key={v}
+                video={v}
+                label={`${t.memberLabel} ${t.madeWithAI}`}
+                ratio={i === 0 ? "aspect-[3/4]" : "aspect-square"}
+                tone="ink"
+                madeWithAI={t.madeWithAI}
+              />
+            ))}
             {STUDENTS.map((src, i) => (
+
               <Placeholder
                 key={src}
                 src={src}
@@ -966,7 +979,11 @@ function Landing() {
       <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Placeholder label="GIZMO Studio Membership Club" src={IMG["photos__who_am_i__ai-creative-director.webp"]} ratio="aspect-[4/5]" tone="chrome" madeWithAI={t.madeWithAI} />
+            <Placeholder label="GIZMO Studio dashboard" video={VID.studioDashboard} ratio="aspect-square" tone="chrome" madeWithAI={t.madeWithAI} />
+            <div className="mt-3">
+              <Placeholder label="GIZMO Studio org chart" video={VID.studioOrgchart} ratio="aspect-square" tone="ink" madeWithAI={t.madeWithAI} />
+            </div>
+
           </div>
           <div className="lg:col-span-7">
             <Eyebrow>{t.clubEyebrow}</Eyebrow>
