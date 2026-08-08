@@ -533,7 +533,6 @@ function Placeholder({
       )}
       {(!(src || video) || showLabel) && (
 
-      {(!src || showLabel) && (
         <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
           {madeWithAI}
         </span>
