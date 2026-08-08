@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import textureAsset from "@/assets/texture-bg.png.asset.json";
 import gzLogo from "@/assets/gz-logo.png.asset.json";
+import { IMG, SHOWCASE, CANT_TELL, STUDENTS, TESTIMONIALS, CHROME, PROOF } from "@/assets/wb";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -478,6 +479,8 @@ function Placeholder({
   ratio = "aspect-[4/5]",
   rotate = 0,
   madeWithAI = "★ Made with AI",
+  src,
+  showLabel = false,
 }: {
   label: string;
   className?: string;
@@ -485,6 +488,8 @@ function Placeholder({
   ratio?: string;
   rotate?: number;
   madeWithAI?: string;
+  src?: string;
+  showLabel?: boolean;
 }) {
   const bg =
     tone === "ink"
@@ -496,21 +501,33 @@ function Placeholder({
           : "bg-[var(--bone)] text-[var(--ink-3)]";
   return (
     <div
-      data-replace={`image:${label}`}
+      data-replace={src ? undefined : `image:${label}`}
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
       className={`relative overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ${ratio} ${bg} ${className}`}
     >
-      <div className="absolute inset-0 grid place-items-center">
-        <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
-          {label}
+      {src ? (
+        <img
+          src={src}
+          alt={label}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center">
+          <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
+            {label}
+          </span>
+        </div>
+      )}
+      {(!src || showLabel) && (
+        <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
+          {madeWithAI}
         </span>
-      </div>
-      <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
-        {madeWithAI}
-      </span>
+      )}
     </div>
   );
 }
+
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -654,10 +671,10 @@ function Landing() {
           <div className="grid gap-10 pb-24 pt-10 lg:grid-cols-12 lg:gap-6">
             <div className="lg:col-span-8 relative">
               <div className="hidden lg:block absolute -left-6 top-24 w-40">
-                <Placeholder label="campaign 01" ratio="aspect-[3/4]" tone="ink" rotate={-6} madeWithAI={t.madeWithAI} />
+                <Placeholder label="campaign 01" src={SHOWCASE[0]} ratio="aspect-[3/4]" tone="ink" rotate={-6} madeWithAI={t.madeWithAI} showLabel />
               </div>
               <div className="hidden lg:block absolute -right-10 -top-2 w-36">
-                <Placeholder label="chrome 02" ratio="aspect-square" tone="chrome" rotate={8} madeWithAI={t.madeWithAI} />
+                <Placeholder label="chrome 02" src={CHROME[0]} ratio="aspect-square" tone="chrome" rotate={8} madeWithAI={t.madeWithAI} />
               </div>
 
               <h1 className="headline text-[14vw] sm:text-[11vw] lg:text-[9.2vw]">
@@ -693,10 +710,10 @@ function Landing() {
 
             <aside className="lg:col-span-4 grid grid-cols-2 gap-3 content-start">
               <div className="col-span-2">
-                <Placeholder label="Hero portrait" ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} />
+                <Placeholder label="Hero portrait" src={IMG["photos__students__xanthe__boxer-opt.webp"]} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} showLabel />
               </div>
-              <Placeholder label="still 03" ratio="aspect-square" tone="chrome" rotate={-3} madeWithAI={t.madeWithAI} />
-              <Placeholder label="editorial 04" ratio="aspect-square" tone="ink" rotate={3} madeWithAI={t.madeWithAI} />
+              <Placeholder label="still 03" src={SHOWCASE[1]} ratio="aspect-square" tone="chrome" rotate={-3} madeWithAI={t.madeWithAI} />
+              <Placeholder label="editorial 04" src={SHOWCASE[2]} ratio="aspect-square" tone="ink" rotate={3} madeWithAI={t.madeWithAI} />
               <p className="col-span-2 mono text-[10px] uppercase tracking-[0.22em] opacity-60">
                 <Brand>{t.byGizmoSub}</Brand>
               </p>
@@ -712,7 +729,7 @@ function Landing() {
                       <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">
                         {t.madeWithAI}
                       </span>
-                      <Placeholder label={l} ratio="aspect-[4/3]" className="h-16 w-24 shadow-none" tone="ink" madeWithAI={t.madeWithAI} />
+                      <Placeholder label={l} src={SHOWCASE[(k * 6 + i) % SHOWCASE.length]} ratio="aspect-[4/3]" className="h-16 w-24 shadow-none" tone="ink" madeWithAI={t.madeWithAI} />
                     </div>
                   ),
                 ),
@@ -753,7 +770,7 @@ function Landing() {
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {t.capItems.map((c, i) => (
               <div key={c} className="btn-glow group relative overflow-hidden rounded-2xl">
-                <Placeholder label={c} ratio="aspect-square" tone={i % 3 === 0 ? "chrome" : "ink"} madeWithAI={t.madeWithAI} />
+                <Placeholder label={c} src={CANT_TELL.concat(SHOWCASE)[i % CANT_TELL.concat(SHOWCASE).length]} ratio="aspect-square" tone={i % 3 === 0 ? "chrome" : "ink"} madeWithAI={t.madeWithAI} />
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
                   <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                     0{i + 1}
@@ -860,9 +877,10 @@ function Landing() {
             {t.workHeadA}<span className="text-[var(--accent)]">{t.workHeadB}</span>
           </h2>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {STUDENTS.map((src, i) => (
               <Placeholder
-                key={i}
+                key={src}
+                src={src}
                 label={`${t.memberLabel} ${i + 1}`}
                 ratio={i % 3 === 0 ? "aspect-[3/4]" : "aspect-square"}
                 tone={i % 2 ? "ink" : "chrome"}
@@ -889,6 +907,17 @@ function Landing() {
                   {t.memberLabel} {i + 1}
                 </figcaption>
               </figure>
+            ))}
+          </div>
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {TESTIMONIALS.concat(PROOF).map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={`${t.memberLabel} ${i + 1}`}
+                loading="lazy"
+                className="w-full rounded-xl border border-[var(--line-dark)] object-cover"
+              />
             ))}
           </div>
         </div>
@@ -922,7 +951,7 @@ function Landing() {
       <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Placeholder label="GIZMO Studio Membership Club" ratio="aspect-[4/5]" tone="chrome" madeWithAI={t.madeWithAI} />
+            <Placeholder label="GIZMO Studio Membership Club" src={IMG["photos__who_am_i__ai-creative-director.webp"]} ratio="aspect-[4/5]" tone="chrome" madeWithAI={t.madeWithAI} />
           </div>
           <div className="lg:col-span-7">
             <Eyebrow>{t.clubEyebrow}</Eyebrow>
@@ -945,7 +974,7 @@ function Landing() {
       <section className="py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5">
-            <Placeholder label="Founder portrait" ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} />
+            <Placeholder label="Founder portrait" src={IMG["photos__who_am_i__wolf-founder.webp"]} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} />
           </div>
           <div className="lg:col-span-7">
             <Eyebrow><Brand>{t.founderEyebrow}</Brand></Eyebrow>
