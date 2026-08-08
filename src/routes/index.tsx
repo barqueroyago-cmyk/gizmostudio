@@ -489,6 +489,7 @@ function Placeholder({
   rotate?: number;
   madeWithAI?: string;
   src?: string;
+  video?: string;
   showLabel?: boolean;
 }) {
   const bg =
@@ -501,11 +502,22 @@ function Placeholder({
           : "bg-[var(--bone)] text-[var(--ink-3)]";
   return (
     <div
-      data-replace={src ? undefined : `image:${label}`}
+      data-replace={src || video ? undefined : `image:${label}`}
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
       className={`relative overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ${ratio} ${bg} ${className}`}
     >
-      {src ? (
+      {video ? (
+        <video
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={label}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : src ? (
         <img
           src={src}
           alt={label}
@@ -519,6 +531,8 @@ function Placeholder({
           </span>
         </div>
       )}
+      {(!(src || video) || showLabel) && (
+
       {(!src || showLabel) && (
         <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
           {madeWithAI}
