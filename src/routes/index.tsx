@@ -478,6 +478,8 @@ function Placeholder({
   ratio = "aspect-[4/5]",
   rotate = 0,
   madeWithAI = "★ Made with AI",
+  src,
+  showLabel = false,
 }: {
   label: string;
   className?: string;
@@ -485,6 +487,8 @@ function Placeholder({
   ratio?: string;
   rotate?: number;
   madeWithAI?: string;
+  src?: string;
+  showLabel?: boolean;
 }) {
   const bg =
     tone === "ink"
@@ -496,21 +500,33 @@ function Placeholder({
           : "bg-[var(--bone)] text-[var(--ink-3)]";
   return (
     <div
-      data-replace={`image:${label}`}
+      data-replace={src ? undefined : `image:${label}`}
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
       className={`relative overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ${ratio} ${bg} ${className}`}
     >
-      <div className="absolute inset-0 grid place-items-center">
-        <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
-          {label}
+      {src ? (
+        <img
+          src={src}
+          alt={label}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center">
+          <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
+            {label}
+          </span>
+        </div>
+      )}
+      {(!src || showLabel) && (
+        <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
+          {madeWithAI}
         </span>
-      </div>
-      <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
-        {madeWithAI}
-      </span>
+      )}
     </div>
   );
 }
+
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
