@@ -21,6 +21,10 @@ export const Route = createFileRoute("/")({
         content:
           "From zero to your first paid brand client with AI. By GIZMO STUDIO.",
       },
+      { property: "og:title", content: "GIZMO STUDIO — AI Creative Direction & Visual Systems" },
+      { property: "og:description", content: "From zero to your first paid brand client with AI. By GIZMO STUDIO." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: gzLogo.url },
       { name: "twitter:image", content: gzLogo.url },
     ],
@@ -498,11 +502,11 @@ function Placeholder({
 }) {
   const bg =
     tone === "ink"
-      ? "bg-[oklch(0.22_0.01_60)] text-[oklch(0.85_0.02_80)]"
+      ? "bg-ink-3 text-bone"
       : tone === "accent"
-        ? "bg-[var(--accent)] text-white"
+        ? "bg-[var(--accent)] text-cream"
         : tone === "chrome"
-          ? "bg-gradient-to-br from-[#c7d4ff] via-[#e9eefc] to-[#7e9aff] text-[var(--ink)]"
+          ? "bg-gradient-to-br from-chrome-start via-chrome-middle to-chrome-end text-[var(--ink)]"
           : "bg-[var(--bone)] text-[var(--ink-3)]";
   return (
     <div
@@ -537,7 +541,7 @@ function Placeholder({
       )}
       {(!(src || video) || showLabel) && (
 
-        <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-white/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
+        <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-cream/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
           {madeWithAI}
         </span>
       )}
@@ -549,7 +553,7 @@ function Placeholder({
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="mono text-[11px] uppercase tracking-[0.22em] opacity-70 flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent-secondary" />
       {children}
     </div>
   );
@@ -577,8 +581,8 @@ function useCountdown() {
 /* ---------- language gate ---------- */
 function LanguageGate({ onPick }: { onPick: (l: Lang) => void }) {
   return (
-    <div className="fixed inset-0 z-[100] grid place-items-center bg-black/70 backdrop-blur-md px-4">
-      <div className="relative w-full max-w-md rounded-3xl border-2 border-[var(--ink)] bg-[var(--cream)] p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]" style={textureStyle}>
+    <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 backdrop-blur-md px-4">
+      <div className="paper-surface relative w-full max-w-md rounded-3xl border-2 border-[var(--ink)] bg-[var(--cream)] p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]" style={textureStyle}>
         <div className="flex items-center gap-3">
           <img src={gzLogo.url} alt="GZ Studio" className="h-10 w-10 rounded-md object-cover" />
           <Brand className="text-xl">GIZMO STUDIO</Brand>
@@ -596,7 +600,7 @@ function LanguageGate({ onPick }: { onPick: (l: Lang) => void }) {
           </button>
           <button
             onClick={() => onPick("en")}
-            className="btn-glow rounded-2xl border-2 border-[var(--ink)] bg-white px-5 py-5 text-left text-[var(--ink)]"
+            className="btn-glow rounded-2xl border-2 border-[var(--ink)] bg-cream px-5 py-5 text-left text-[var(--ink)]"
           >
             <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">&nbsp;</span>
             <div className="mt-2 text-3xl font-black">EN</div>
@@ -636,7 +640,7 @@ function Landing() {
       <div className="sticky top-0 z-50 px-3 pt-3">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[var(--cream)] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.4)]">
           <a href="#" className="btn-glow flex items-center gap-2 rounded-full pl-1 pr-3 py-1">
-            <img src={gzLogo.url} alt="GZ Studio" className="h-8 w-8 rounded-full object-cover ring-1 ring-white/10" />
+            <img src={gzLogo.url} alt="GZ Studio" className="h-8 w-8 rounded-full object-cover ring-1 ring-cream/10" />
             <Brand className="hidden sm:inline text-base tracking-tight">GIZMO STUDIO</Brand>
           </a>
           <div className="flex items-center gap-3 text-[11px]">
@@ -649,13 +653,13 @@ function Landing() {
           </div>
           <div className="flex items-center gap-2">
             {/* lang switcher */}
-            <div className="flex items-center rounded-full bg-white/10 p-0.5 text-[10px] mono uppercase tracking-[0.18em]">
+            <div className="flex items-center rounded-full bg-cream/10 p-0.5 text-[10px] mono uppercase tracking-[0.18em]">
               {(["es", "en"] as const).map((l) => (
                 <button
                   key={l}
                   onClick={() => setLanguage(l)}
                   className={`btn-glow rounded-full px-2 py-1 ${
-                    (lang ?? "es") === l ? "bg-[var(--accent)] text-white" : "text-[var(--cream)]/70"
+                    (lang ?? "es") === l ? "bg-[var(--accent)] text-cream" : "text-[var(--cream)]/70"
                   }`}
                 >
                   {l.toUpperCase()}
@@ -664,7 +668,7 @@ function Landing() {
             </div>
             <a
               href="#pricing"
-              className="btn-glow rounded-full bg-[var(--accent)] px-3 sm:px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white"
+              className="btn-glow rounded-full bg-[var(--accent)] px-3 sm:px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-cream"
             >
               {t.joinNow}
             </a>
@@ -676,7 +680,7 @@ function Landing() {
       </div>
 
       {/* HERO */}
-      <header className="relative overflow-hidden" style={textureStyle}>
+      <header className="paper-surface relative overflow-hidden" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 pt-10 sm:px-6">
           <div className="flex items-center justify-between">
             <Eyebrow><Brand>{t.brandTag}</Brand></Eyebrow>
@@ -704,7 +708,7 @@ function Landing() {
               </h1>
 
               <div className="mt-6 flex items-start gap-3">
-                <svg width="36" height="36" viewBox="0 0 36 36" className="mt-1 shrink-0 text-[var(--accent)]" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <svg width="36" height="36" viewBox="0 0 36 36" className="mt-1 shrink-0 text-accent-secondary" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M6 24 Q14 6, 22 16 T34 14" />
                   <path d="M28 10 L34 14 L30 20" />
                 </svg>
@@ -716,7 +720,7 @@ function Landing() {
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <a
                   href="#pricing"
-                  className="btn-glow group inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
+                  className="btn-glow group inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-4 text-sm font-bold uppercase tracking-[0.18em] text-cream shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
                 >
                   {t.ctaLockIn}
                   <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -780,7 +784,7 @@ function Landing() {
       </section>
 
       {/* Capability grid */}
-      <section className="py-24" style={textureStyle}>
+      <section className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
           <Eyebrow>{t.capEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">{t.capHead}</h2>
@@ -788,7 +792,7 @@ function Landing() {
             {t.capItems.map((c, i) => (
               <div key={c} className="btn-glow group relative overflow-hidden rounded-2xl">
                 <Placeholder label={c} src={CANT_TELL.concat(SHOWCASE)[i % CANT_TELL.concat(SHOWCASE).length]} ratio="aspect-square" tone={i % 3 === 0 ? "chrome" : "ink"} madeWithAI={t.madeWithAI} />
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-ink/80 to-transparent p-3 text-cream">
                   <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                     0{i + 1}
                   </span>
@@ -815,13 +819,13 @@ function Landing() {
               <ul className="mt-6 space-y-4 text-xl">
                 {t.cmpMost.map((x) => (
                   <li key={x} className="flex gap-3 items-start">
-                    <span className="text-[var(--accent)] text-2xl leading-none">✕</span>
+                    <span className="text-accent-secondary text-2xl leading-none">✕</span>
                     <span className="line-through opacity-60">{x}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl bg-[var(--cream)] p-8 text-[var(--ink)]" style={textureStyle}>
+            <div className="paper-surface rounded-3xl bg-[var(--cream)] p-8 text-[var(--ink)]" style={textureStyle}>
               <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
                 {t.cmpBrands}
               </span>
@@ -839,7 +843,7 @@ function Landing() {
       </section>
 
       {/* Trusted by marquee */}
-      <section className="border-y border-[var(--ink)]/15 py-10" style={textureStyle}>
+      <section className="paper-surface border-y border-[var(--ink)]/15 py-10" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
           <Eyebrow>{t.trustedBy}</Eyebrow>
           <div className="mt-6 overflow-hidden">
@@ -848,7 +852,7 @@ function Landing() {
                 Array.from({ length: 8 }).map((_, i) => (
                   <div
                     key={`${k}-${i}`}
-                    className="grid h-12 w-36 place-items-center rounded border border-[var(--ink)]/15 bg-white/40 backdrop-blur"
+                    className="grid h-12 w-36 place-items-center rounded border border-[var(--ink)]/15 bg-cream/40 backdrop-blur"
                     data-replace={`logo:placeholder-${i}`}
                   >
                     <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">
@@ -887,7 +891,7 @@ function Landing() {
       </section>
 
       {/* Member work */}
-      <section className="py-24" style={textureStyle}>
+      <section className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
           <Eyebrow>{t.workEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
@@ -952,7 +956,7 @@ function Landing() {
       </section>
 
       {/* Curriculum */}
-      <section className="py-24" style={textureStyle}>
+      <section className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
           <Eyebrow>{t.curEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
@@ -963,7 +967,7 @@ function Landing() {
             {t.modules.map((mod, i) => (
               <li
                 key={mod}
-                className="btn-glow rounded-2xl border border-[var(--ink)]/15 bg-white/50 backdrop-blur p-5"
+                className="btn-glow rounded-2xl border border-[var(--ink)]/15 bg-cream/50 backdrop-blur p-5"
               >
                 <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                   {t.moduleLabel} 0{i + 1}
@@ -1003,7 +1007,7 @@ function Landing() {
       </section>
 
       {/* Founder */}
-      <section className="py-24" style={textureStyle}>
+      <section className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5">
             <Placeholder label="Founder portrait" src={IMG["photos__who_am_i__wolf-founder.webp"]} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} />
@@ -1020,7 +1024,7 @@ function Landing() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24" style={textureStyle}>
+      <section id="pricing" className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6">
           <div className="text-center">
             <Eyebrow>{t.pricingEyebrow}</Eyebrow>
@@ -1030,7 +1034,7 @@ function Landing() {
           </div>
 
           <div className="mx-auto mt-10 flex w-full justify-center">
-            <div className="inline-flex rounded-full border border-[var(--ink)]/20 bg-white/60 backdrop-blur p-1">
+            <div className="inline-flex rounded-full border border-[var(--ink)]/20 bg-cream/60 backdrop-blur p-1">
               {(["full", "split"] as const).map((p) => (
                 <button
                   key={p}
@@ -1047,7 +1051,7 @@ function Landing() {
             </div>
           </div>
 
-          <div className="mt-10 rounded-3xl border-2 border-[var(--ink)] bg-white p-10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.4)]">
+          <div className="mt-10 rounded-3xl border-2 border-[var(--ink)] bg-cream p-10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
@@ -1068,7 +1072,7 @@ function Landing() {
               <a
                 href="#"
                 data-replace="link:stripe-checkout"
-                className="btn-glow inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
+                className="btn-glow inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-cream shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
               >
                 {t.startNow}
               </a>
@@ -1105,7 +1109,7 @@ function Landing() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 text-center" style={textureStyle}>
+      <section className="paper-surface py-32 text-center" style={textureStyle}>
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6">
           <Eyebrow><Brand>{t.finalEyebrow}</Brand></Eyebrow>
           <h2 className="headline mt-6 text-6xl sm:text-8xl">
@@ -1124,7 +1128,7 @@ function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--ink)]/15 py-12 bg-[var(--cream)]" style={textureStyle}>
+      <footer className="paper-surface border-t border-[var(--ink)]/15 py-12 bg-[var(--cream)]" style={textureStyle}>
         <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 pb-20">
           <div className="flex items-center gap-3">
             <img src={gzLogo.url} alt="GZ Studio" className="h-9 w-9 rounded-md object-cover" />
@@ -1133,10 +1137,10 @@ function Landing() {
             </span>
           </div>
           <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.22em] opacity-70">
-            <a href="#" className="btn-glow rounded px-1" data-replace="link:terms">{t.navTerms}</a>
-            <a href="#" className="btn-glow rounded px-1" data-replace="link:privacy">{t.navPrivacy}</a>
-            <a href="#" className="btn-glow rounded px-1" data-replace="link:refund">{t.navRefund}</a>
-            <a href="mailto:hello@example.com" className="btn-glow rounded px-1" data-replace="link:contact">{t.navContact}</a>
+            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:terms">{t.navTerms}</a>
+            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:privacy">{t.navPrivacy}</a>
+            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:refund">{t.navRefund}</a>
+            <a href="mailto:hello@example.com" className="btn-glow secondary-glow rounded px-1" data-replace="link:contact">{t.navContact}</a>
           </div>
         </div>
       </footer>
@@ -1156,14 +1160,14 @@ function Landing() {
             <a
               key={l}
               href={h}
-              className="btn-glow hidden sm:inline rounded-full px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] hover:bg-white/10"
+              className="btn-glow secondary-glow hidden sm:inline rounded-full px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] hover:bg-cream/10"
             >
               {l}
             </a>
           ))}
           <a
             href="#pricing"
-            className="btn-glow ml-1 rounded-full bg-[var(--accent)] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white"
+            className="btn-glow ml-1 rounded-full bg-[var(--accent)] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-cream"
           >
             {t.joinNow}
           </a>

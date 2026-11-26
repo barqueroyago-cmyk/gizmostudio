@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -34,7 +35,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -85,8 +86,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "GIZMO STUDIO — AI Creative Direction & Visual Systems" },
       { name: "twitter:description", content: "From zero to your first paid brand client with AI. Built by GIZMO STUDIO — Designed by Yago Barquero." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/3GvGGSLp8ga9zOFwN46wG8NL7LT2/social-images/social-1781642425779-23f83166-845c-4d11-ad09-28e8413b5644.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/3GvGGSLp8ga9zOFwN46wG8NL7LT2/social-images/social-1781642425779-23f83166-845c-4d11-ad09-28e8413b5644.webp" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

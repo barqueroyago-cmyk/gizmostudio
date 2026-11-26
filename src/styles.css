@@ -6,8 +6,8 @@
 
 /*
  * Waviboy Academy — restoration design system
- * Two surfaces: cream (hero / light editorial) and ink (dark editorial body).
- * Single accent: orange. Two type families: editorial serif + grotesk.
+ * Two surfaces: monochromatic paper and ink (dark editorial body).
+ * Royal blue primary accent with selective pink graphic details.
  */
 
 @theme inline {
@@ -27,6 +27,10 @@
   --color-line: var(--line);
   --color-line-dark: var(--line-dark);
   --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-chrome-start: var(--chrome-start);
+  --color-chrome-middle: var(--chrome-middle);
+  --color-chrome-end: var(--chrome-end);
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -55,32 +59,36 @@
   --radius: 0.625rem;
 
   /* surfaces */
-  --cream: oklch(0.965 0.018 85);
-  --bone: oklch(0.94 0.02 80);
-  --ink: oklch(0.14 0.005 60);
-  --ink-2: oklch(0.18 0.005 60);
-  --ink-3: oklch(0.24 0.006 60);
-  --line: oklch(0.86 0.015 80);
-  --line-dark: oklch(0.32 0.008 60);
+  --cream: #FFFFFF;
+  --bone: oklch(0.94 0 0);
+  --ink: #0A0A0A;
+  --ink-2: oklch(0.18 0 0);
+  --ink-3: oklch(0.24 0 0);
+  --line: oklch(0.86 0 0);
+  --line-dark: oklch(0.32 0 0);
 
-  /* accent — primary blue */
-  --accent: #3366FF;
-  --accent-foreground: oklch(0.98 0 0);
+  /* accents */
+  --accent: #4169E1;
+  --accent-secondary: #FF0A54;
+  --accent-foreground: var(--cream);
+  --chrome-start: color-mix(in srgb, var(--accent) 22%, var(--cream));
+  --chrome-middle: color-mix(in srgb, var(--accent) 8%, var(--cream));
+  --chrome-end: color-mix(in srgb, var(--accent) 55%, var(--cream));
 
 
   /* shadcn semantic */
   --background: var(--cream);
   --foreground: var(--ink);
-  --card: oklch(1 0 0);
+  --card: var(--cream);
   --card-foreground: var(--ink);
-  --popover: oklch(1 0 0);
+  --popover: var(--cream);
   --popover-foreground: var(--ink);
   --primary: var(--ink);
   --primary-foreground: var(--cream);
   --secondary: var(--bone);
   --secondary-foreground: var(--ink);
   --muted: var(--bone);
-  --muted-foreground: oklch(0.45 0.01 60);
+  --muted-foreground: oklch(0.45 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: var(--line);
@@ -97,7 +105,7 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  ::selection { background: var(--accent); color: var(--ink); }
+  ::selection { background: var(--accent); color: var(--cream); }
 }
 
 @utility serif { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
@@ -121,15 +129,23 @@
 @utility btn-glow {
   transition: box-shadow 220ms ease, transform 220ms ease, filter 220ms ease;
   &:hover, &:focus-visible, &:active {
-    box-shadow: 0 0 0 1px rgba(51,102,255,0.45), 0 0 18px 2px rgba(51,102,255,0.55), 0 0 38px 6px rgba(51,102,255,0.28);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow-color, var(--accent)) 45%, transparent), 0 0 18px 2px color-mix(in srgb, var(--glow-color, var(--accent)) 55%, transparent), 0 0 38px 6px color-mix(in srgb, var(--glow-color, var(--accent)) 28%, transparent);
     filter: brightness(1.05);
   }
   &:active { transform: translateY(1px) scale(0.99); }
 }
 @media (hover: none) {
   .btn-glow:active {
-    box-shadow: 0 0 0 1px rgba(51,102,255,0.45), 0 0 18px 2px rgba(51,102,255,0.55), 0 0 38px 6px rgba(51,102,255,0.28);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow-color, var(--accent)) 45%, transparent), 0 0 18px 2px color-mix(in srgb, var(--glow-color, var(--accent)) 55%, transparent), 0 0 38px 6px color-mix(in srgb, var(--glow-color, var(--accent)) 28%, transparent);
   }
+}
+
+@utility secondary-glow { --glow-color: var(--accent-secondary); }
+
+/* Blend only the paper background; foreground media and logos stay untouched. */
+.paper-surface {
+  background-color: var(--cream);
+  background-blend-mode: luminosity;
 }
 
 @utility texture-bg {
@@ -138,6 +154,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--cream);
+  background-blend-mode: luminosity;
 }
 
 
