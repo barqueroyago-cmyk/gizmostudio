@@ -1,554 +1,135 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import textureAsset from "@/assets/texture-bg.png.asset.json";
-import gzLogo from "@/assets/gz-logo.png.asset.json";
-import { IMG, SHOWCASE, CANT_TELL, STUDENTS, TESTIMONIALS, CHROME, PROOF } from "@/assets/wb";
-import { VID, STUDENT_VIDEOS } from "@/assets/wbv";
-
+import chromeAsset from "@/assets/wb/chrome__shape-1.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GIZMO STUDIO — AI Creative Direction & Visual Systems" },
-      {
-        name: "description",
-        content:
-          "From zero to your first paid brand client with AI. By GIZMO STUDIO.",
-      },
-      { property: "og:title", content: "GIZMO STUDIO — AI Creative Direction & Visual Systems" },
-      { property: "og:description", content: "From zero to your first paid brand client with AI. By GIZMO STUDIO." },
+      { title: "KARKA — Streetwear independiente" },
+      { name: "description", content: "KARKA. Streetwear independiente. Prendas definidas por su diseño, sus proporciones y sus detalles." },
+      { property: "og:title", content: "KARKA — Streetwear independiente" },
+      { property: "og:description", content: "Streetwear independiente. Cada detalle cuenta. Descubre KARKA." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:image", content: gzLogo.url },
-      { name: "twitter:image", content: gzLogo.url },
+      { property: "og:url", content: "https://gizmostudio.lovable.app/" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "KARKA — Streetwear independiente" },
+      { name: "twitter:description", content: "Streetwear independiente. Cada detalle cuenta. Descubre KARKA." },
     ],
+    links: [{ rel: "canonical", href: "https://gizmostudio.lovable.app/" }],
   }),
   component: Landing,
 });
 
-const TEXTURE_URL = textureAsset.url;
 const textureStyle: React.CSSProperties = {
-  backgroundImage: `url(${TEXTURE_URL})`,
+  backgroundImage: `url(${textureAsset.url})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
 };
 
-/* ---------- i18n ---------- */
 type Lang = "es" | "en";
 type Dict = {
-  brandTag: string;
-  heroEyebrow: string;
-  heroTag: string;
-  heroLine1: string;
-  heroLine2: string;
-  heroLine3a: string;
-  heroLine3b: string;
-  heroLine4a: string;
-  heroLine4b: string;
-  heroHand1: string;
-  heroHand2: string;
-  heroHand3: string;
-  ctaLockIn: string;
-  trusted: string;
-  byGizmoSub: string;
-  madeWithAI: string;
-  countdownLabel: string;
-  joinNow: string;
-  login: string;
-  barriersEyebrow: string;
-  barriersHeadA: string;
-  barriersHeadB: string;
-  barriersHeadC: string;
-  barriers: string[];
-  barriersHand1: string;
-  barriersHand2: string;
-  barriersHand3: string;
-  capEyebrow: string;
-  capHead: string;
-  capItems: string[];
-  cmpEyebrow: string;
-  cmpHeadA: string;
-  cmpHeadB: string;
-  cmpHeadC: string;
-  cmpMostCreators: string;
-  cmpMost: string[];
-  cmpBrands: string;
-  cmpGood: string[];
-  trustedBy: string;
-  methodEyebrow: string;
-  methodHeadA: string;
-  methodHeadB: string;
-  moves: { t: string; d: string }[];
-  workEyebrow: string;
-  workHeadA: string;
-  workHeadB: string;
-  testEyebrow: string;
-  testHead: string;
-  testQuotes: string[];
-  memberLabel: string;
-  curEyebrow: string;
-  curHeadA: string;
-  curHeadB: string;
-  modules: string[];
-  moduleLabel: string;
-  clubEyebrow: string;
-  clubHeadA: string;
-  clubHeadB: string;
-  clubItems: string[];
-  founderEyebrow: string;
-  founderHeadA: string;
-  founderHeadB: string;
-  founderHand: string;
-  founderBody: string;
-  pricingEyebrow: string;
-  pricingHeadA: string;
-  pricingHeadB: string;
-  pricingHeadC: string;
-  payFull: string;
-  paySplit: string;
-  founding: string;
-  oneTime: string;
-  monthly4: string;
-  wasFounding: string;
-  startNow: string;
-  features: string[];
-  faqEyebrow: string;
-  faqHeadA: string;
-  faqs: [string, string][];
-  finalEyebrow: string;
-  finalA: string;
-  finalB: string;
-  finalCTA: string;
-  finalHand: string;
-  footerCopy: string;
-  navTerms: string;
-  navPrivacy: string;
-  navRefund: string;
-  navContact: string;
-  navCurriculum: string;
-  navWork: string;
-  navMembership: string;
-  navTestimonials: string;
-  navPricing: string;
-  navFAQ: string;
-  langWelcome: string;
-  langPick: string;
-  langRecommended: string;
+  brandTag: string; heroTag: string;
+  heroLine1: string; heroLine2: string; heroLine3a: string; heroLine3b: string; heroLine4a: string; heroLine4b: string;
+  heroSupport: string; heroCTA: string; visualLabel: string;
+  introEyebrow: string; introHeadA: string; introHeadB: string; concepts: string[];
+  collectionEyebrow: string; collectionHead: string; collectionLabel: string;
+  designEyebrow: string; designHeadA: string; designHeadB: string; principles: { t: string; d: string }[];
+  lookbookEyebrow: string; lookbookHeadA: string; lookbookHeadB: string; lookbookLabel: string;
+  releaseEyebrow: string; releaseHeadA: string; releaseHeadB: string; releaseItems: string[];
+  aboutEyebrow: string; aboutHeadA: string; aboutHeadB: string; aboutHand: string; aboutBody: string;
+  faqEyebrow: string; faqHeadA: string; faqs: [string, string][];
+  finalEyebrow: string; finalA: string; finalB: string; finalCTA: string;
+  footerCopy: string; footerItems: string[]; footerNotice: string;
+  navCollection: string; navLookbook: string; navAbout: string; navFAQ: string;
+};
+
+const ES: Dict = {
+  brandTag: "KARKA · STREETWEAR INDEPENDIENTE", heroTag: "Cada detalle cuenta.",
+  heroLine1: "DISEÑADO", heroLine2: "PARA MARCAR", heroLine3a: "LA", heroLine3b: "", heroLine4a: "", heroLine4b: "DIFERENCIA.",
+  heroSupport: "Streetwear independiente. Cada detalle cuenta.", heroCTA: "DESCUBRE KARKA.", visualLabel: "Espacio visual de KARKA",
+  introEyebrow: "02 / Identidad", introHeadA: "LA DIFERENCIA ESTÁ EN LOS ", introHeadB: "DETALLES.",
+  concepts: ["Patronaje.", "Proporciones.", "Construcción.", "Identidad."],
+  collectionEyebrow: "03 / Colección", collectionHead: "PRIMERA COLECCIÓN.", collectionLabel: "KARKA",
+  designEyebrow: "04 / Diseño y construcción", designHeadA: "Diseño con ", designHeadB: "intención.",
+  principles: [
+    { t: "Patronaje", d: "Nuestra prioridad: explorar cómo la forma define una prenda." },
+    { t: "Materiales", d: "Nuestra prioridad: pensar en textura, peso y caída." },
+    { t: "Construcción", d: "Nuestra prioridad: considerar cómo encaja cada parte." },
+    { t: "Detalles", d: "Nuestra prioridad: dar intención a los pequeños elementos." },
+  ],
+  lookbookEyebrow: "05 / Lookbook", lookbookHeadA: "El universo ", lookbookHeadB: "KARKA.", lookbookLabel: "Espacio del lookbook KARKA",
+  releaseEyebrow: "06 / Próximos lanzamientos", releaseHeadA: "ESTO SOLO ES EL ", releaseHeadB: "PRINCIPIO.",
+  releaseItems: ["Estamos preparando la primera colección.", "Compartiremos los detalles antes del lanzamiento.", "La disponibilidad se anunciará cuando esté confirmada."],
+  aboutEyebrow: "07 / Nosotros", aboutHeadA: "Esto es ", aboutHeadB: "KARKA.", aboutHand: "Diseño. Proporciones. Detalles.",
+  aboutBody: "KARKA es una marca independiente de streetwear que nace de una idea sencilla: crear prendas reconocibles por su diseño, sus proporciones y sus detalles.",
+  faqEyebrow: "08 / Preguntas", faqHeadA: "Preguntas frecuentes.",
+  faqs: [
+    ["¿Cómo elijo mi talla?", "La guía de tallas y las medidas confirmadas estarán disponibles antes del lanzamiento."],
+    ["¿Cuándo estará disponible la colección?", "La disponibilidad confirmada se comunicará antes del lanzamiento. Aún no hay una fecha anunciada."],
+    ["¿A dónde enviáis?", "Los destinos, costes y plazos de envío confirmados estarán disponibles antes del lanzamiento."],
+    ["¿Cómo funcionarán las devoluciones?", "Las condiciones confirmadas de cambios y devoluciones estarán disponibles antes del lanzamiento."],
+  ],
+  finalEyebrow: "KARKA", finalA: "ESTO ES ", finalB: "KARKA.", finalCTA: "DESCUBRE KARKA.",
+  footerCopy: "Streetwear independiente.", footerItems: ["Contacto", "Redes sociales", "Información legal"], footerNotice: "Información confirmada antes del lanzamiento.",
+  navCollection: "Colección", navLookbook: "Lookbook", navAbout: "Nosotros", navFAQ: "FAQ",
 };
 
 const EN: Dict = {
-  brandTag: "BY GIZMO STUDIO · EST. 2024",
-  heroEyebrow: "AI Creative Direction & Visual Systems",
-  heroTag: "AI Creative Direction & Visual Systems",
-  heroLine1: "From zero",
-  heroLine2: "to your first",
-  heroLine3a: "paid",
-  heroLine3b: " brand",
-  heroLine4a: "client with ",
-  heroLine4b: "AI.",
-  heroHand1: "in ",
-  heroHand2: "60 days.",
-  heroHand3: " then scale to $10K/mo.",
-  ctaLockIn: "Lock in founding price",
-  trusted: "trusted by 2,400+ creators",
-  byGizmoSub: "BY GIZMO STUDIO — AI Creative Direction & Visual Systems",
-  madeWithAI: "★ Made with AI",
-  countdownLabel: "Founding price locks in",
-  joinNow: "Join now →",
-  login: "Log in",
-  barriersEyebrow: "02 / The barriers are gone",
-  barriersHeadA: "You don't need a studio, a camera, a team — or ",
-  barriersHeadB: "permission.",
-  barriersHeadC: "",
-  barriers: ["No film school", "No expensive gear", "No agency contacts", "No 10-year career"],
-  barriersHand1: "the only thing left is ",
-  barriersHand2: "taste",
-  barriersHand3: " — and the willingness to ship.",
-  capEyebrow: "03 / What you'll make",
-  capHead: "Campaign-grade work, on demand.",
-  capItems: [
-    "Campaign stills",
-    "Product photography",
-    "Editorial covers",
-    "Brand films",
-    "Look-books",
-    "Social cut-downs",
-    "Out-of-home",
-    "Identity systems",
-    "Pitch decks",
+  brandTag: "KARKA · INDEPENDENT STREETWEAR", heroTag: "Every detail matters.",
+  heroLine1: "DESIGNED", heroLine2: "TO MAKE", heroLine3a: "A", heroLine3b: "", heroLine4a: "", heroLine4b: "DIFFERENCE.",
+  heroSupport: "Independent streetwear. Every detail matters.", heroCTA: "DISCOVER KARKA.", visualLabel: "KARKA visual space",
+  introEyebrow: "02 / Identity", introHeadA: "THE DIFFERENCE IS IN THE ", introHeadB: "DETAILS.",
+  concepts: ["Fit.", "Proportions.", "Construction.", "Identity."],
+  collectionEyebrow: "03 / Collection", collectionHead: "FIRST COLLECTION.", collectionLabel: "KARKA",
+  designEyebrow: "04 / Design and construction", designHeadA: "Design with ", designHeadB: "intention.",
+  principles: [
+    { t: "Fit", d: "Our priority: exploring how shape defines a garment." },
+    { t: "Materials", d: "Our priority: considering texture, weight and drape." },
+    { t: "Construction", d: "Our priority: thinking about how each part comes together." },
+    { t: "Details", d: "Our priority: giving the small elements intention." },
   ],
-  cmpEyebrow: "04 / Direction vs decoration",
-  cmpHeadA: "What ",
-  cmpHeadB: "not",
-  cmpHeadC: " to do — and what actually sells.",
-  cmpMostCreators: "Most creators",
-  cmpMost: [
-    "Random AI images with no thesis",
-    "Imitating viral style of the week",
-    "Selling prompts, not outcomes",
-    "No system, no client, no income",
-  ],
-  cmpBrands: "What brands pay for",
-  cmpGood: [
-    "A point of view brands recognise",
-    "Campaign-grade work, not single posts",
-    "Repeatable systems, not one-offs",
-    "Retainers, not freelance scraps",
-  ],
-  trustedBy: "Trusted by teams at",
-  methodEyebrow: "05 / The GIZMO Studio method",
-  methodHeadA: "Four moves. Zero to ",
-  methodHeadB: "paid work.",
-  moves: [
-    { t: "Taste", d: "Build a point of view brands recognise on sight." },
-    { t: "Tools", d: "Master the AI stack that produces brand-grade output." },
-    { t: "Automation", d: "Turn one idea into a full campaign in an afternoon." },
-    { t: "Monetise", d: "Package it as an offer brands actually pay for." },
-  ],
-  workEyebrow: "06 / Member work",
-  workHeadA: "Proof that people are ",
-  workHeadB: "building this.",
-  testEyebrow: "07 / Testimonials",
-  testHead: "The clearest path I've seen.",
-  testQuotes: [
-    "Booked my first $3K brand client in week 5.",
-    "I went from making AI memes to a real retainer.",
-    "Three brands DM'd me after my first campaign drop.",
-    "The taste module alone changed how I see everything.",
-    "My pitch deck closed in one call.",
-    "I finally have a system, not just a vibe.",
-  ],
-  memberLabel: "Member",
-  curEyebrow: "08 / Inside GIZMO STUDIO — Curriculum",
-  curHeadA: "Nine modules. Total value ",
-  curHeadB: "$797.",
-  modules: [
-    "Foundations of AI direction",
-    "Taste & visual thesis",
-    "The image stack",
-    "Motion & campaign films",
-    "Automation pipelines",
-    "Building the offer",
-    "Finding clients",
-    "Pitching & closing",
-    "Retainers & scaling",
-  ],
-  moduleLabel: "Module",
-  clubEyebrow: "09 / GIZMO Studio Membership Club",
-  clubHeadA: "A private room for people ",
-  clubHeadB: "shipping.",
-  clubItems: [
-    "Weekly live calls — replays included",
-    "GIZMO TV — drops, breakdowns & tutorials",
-    "GIZMO Bot — your AI direction co-pilot",
-    "Leaderboard, swap shop, and feedback room",
-  ],
-  founderEyebrow: "BY GIZMO STUDIO",
-  founderHeadA: "Hi — we're ",
-  founderHeadB: "GIZMO STUDIO.",
-  founderHand: "we direct, we ship, we teach the system behind it.",
-  founderBody:
-    "GIZMO STUDIO is an AI creative direction practice. We build visual systems for brands and teach the method behind them inside this program.",
-  pricingEyebrow: "10 / Pricing",
-  pricingHeadA: "Lock in the ",
-  pricingHeadB: "founding",
-  pricingHeadC: " price.",
-  payFull: "Pay in full",
-  paySplit: "4× payments",
-  founding: "GIZMO STUDIO — Founding access",
-  oneTime: "one-time",
-  monthly4: "× 4 monthly",
-  wasFounding: " — founding cohort only.",
-  startNow: "Start now →",
-  features: [
-    "9 core modules + 6 bonus drops",
-    "Private community + leaderboard",
-    "Weekly live calls with GIZMO STUDIO",
-    "Templates, prompts, automation kits",
-    "First-client placement program",
-    "Lifetime updates",
-  ],
-  faqEyebrow: "11 / Questions",
-  faqHeadA: "Frequently asked.",
+  lookbookEyebrow: "05 / Lookbook", lookbookHeadA: "The world of ", lookbookHeadB: "KARKA.", lookbookLabel: "KARKA lookbook space",
+  releaseEyebrow: "06 / Upcoming releases", releaseHeadA: "THIS IS JUST THE ", releaseHeadB: "BEGINNING.",
+  releaseItems: ["We are preparing the first collection.", "We will share the details before launch.", "Availability will be announced once confirmed."],
+  aboutEyebrow: "07 / About", aboutHeadA: "This is ", aboutHeadB: "KARKA.", aboutHand: "Design. Proportions. Details.",
+  aboutBody: "KARKA is an independent streetwear brand built around a simple idea: creating garments defined by their design, proportions and details.",
+  faqEyebrow: "08 / Questions", faqHeadA: "Frequently asked.",
   faqs: [
-    ["Do I need experience?", "No — the curriculum starts from zero and ramps to client-ready output."],
-    ["How long is access?", "Lifetime access plus all future updates."],
-    ["What tools do I need?", "A laptop and a couple of paid AI tools — full stack covered inside."],
-    ["Is there a refund?", "14-day refund window, no questions asked."],
-    ["When do calls happen?", "Weekly, with replays available across time zones."],
-    ["Will it stay this price?", "No — the founding price ends when the cohort fills."],
+    ["How do I choose my size?", "The confirmed size guide and measurements will be available before launch."],
+    ["When will the collection be available?", "Confirmed availability will be shared before launch. No release date has been announced yet."],
+    ["Where will you ship?", "Confirmed shipping destinations, costs and delivery times will be available before launch."],
+    ["How will returns work?", "Confirmed exchange and return conditions will be available before launch."],
   ],
-  finalEyebrow: "BY GIZMO STUDIO",
-  finalA: "Your first paid client is ",
-  finalB: "already in the building.",
-  finalCTA: "Join GIZMO STUDIO →",
-  finalHand: " — founding cohort only.",
-  footerCopy: "© GIZMO STUDIO · AI Creative Direction & Visual Systems",
-  navTerms: "Terms",
-  navPrivacy: "Privacy",
-  navRefund: "Refund",
-  navContact: "Contact",
-  navCurriculum: "Curriculum",
-  navWork: "Work",
-  navMembership: "Membership",
-  navTestimonials: "Testimonials",
-  navPricing: "Pricing",
-  navFAQ: "FAQ",
-  langWelcome: "Welcome",
-  langPick: "Choose your language",
-  langRecommended: "Recommended",
-} as Dict;
-
-const ES: Dict = {
-  brandTag: "POR GIZMO STUDIO · DESDE 2024",
-  heroEyebrow: "Dirección Creativa con IA y Sistemas Visuales",
-  heroTag: "Dirección Creativa con IA y Sistemas Visuales",
-  heroLine1: "De cero",
-  heroLine2: "a tu primer",
-  heroLine3a: "cliente",
-  heroLine3b: " de marca",
-  heroLine4a: "pagado con ",
-  heroLine4b: "IA.",
-  heroHand1: "en ",
-  heroHand2: "60 días.",
-  heroHand3: " luego escala a 10.000 $/mes.",
-  ctaLockIn: "Asegura el precio fundador",
-  trusted: "más de 2.400 creadores confían en nosotros",
-  byGizmoSub: "POR GIZMO STUDIO — Dirección Creativa con IA y Sistemas Visuales",
-  madeWithAI: "★ Hecho con IA",
-  countdownLabel: "El precio fundador termina en",
-  joinNow: "Únete ya →",
-  login: "Acceder",
-  barriersEyebrow: "02 / Se acabaron las barreras",
-  barriersHeadA: "No necesitas estudio, cámara, equipo — ni ",
-  barriersHeadB: "permiso.",
-  barriersHeadC: "",
-  barriers: [
-    "Sin escuela de cine",
-    "Sin equipo caro",
-    "Sin contactos de agencia",
-    "Sin 10 años de carrera",
-  ],
-  barriersHand1: "lo único que queda es el ",
-  barriersHand2: "criterio",
-  barriersHand3: " — y las ganas de publicar.",
-  capEyebrow: "03 / Lo que vas a crear",
-  capHead: "Trabajo de nivel campaña, cuando quieras.",
-  capItems: [
-    "Imágenes de campaña",
-    "Fotografía de producto",
-    "Portadas editoriales",
-    "Películas de marca",
-    "Look-books",
-    "Cortes para redes",
-    "Publicidad exterior",
-    "Sistemas de identidad",
-    "Pitch decks",
-  ],
-  cmpEyebrow: "04 / Dirección vs decoración",
-  cmpHeadA: "Qué ",
-  cmpHeadB: "no",
-  cmpHeadC: " hacer — y qué sí vende de verdad.",
-  cmpMostCreators: "La mayoría de creadores",
-  cmpMost: [
-    "Imágenes con IA sin tesis ninguna",
-    "Imitando el estilo viral de la semana",
-    "Venden prompts, no resultados",
-    "Sin sistema, sin cliente, sin ingresos",
-  ],
-  cmpBrands: "Por lo que pagan las marcas",
-  cmpGood: [
-    "Un punto de vista que las marcas reconocen",
-    "Trabajo de campaña, no posts sueltos",
-    "Sistemas repetibles, no piezas únicas",
-    "Iguala, no encargos sueltos",
-  ],
-  trustedBy: "Equipos que ya nos eligen",
-  methodEyebrow: "05 / El método GIZMO Studio",
-  methodHeadA: "Cuatro pasos. De cero a ",
-  methodHeadB: "trabajo pagado.",
-  moves: [
-    { t: "Criterio", d: "Crea un punto de vista que las marcas reconozcan al instante." },
-    { t: "Herramientas", d: "Domina el stack de IA que produce nivel marca." },
-    { t: "Automatización", d: "Convierte una idea en una campaña entera en una tarde." },
-    { t: "Monetiza", d: "Empaquétalo como una oferta por la que las marcas pagan." },
-  ],
-  workEyebrow: "06 / Trabajo de miembros",
-  workHeadA: "La prueba de que hay gente ",
-  workHeadB: "construyendo esto.",
-  testEyebrow: "07 / Testimonios",
-  testHead: "El camino más claro que he visto.",
-  testQuotes: [
-    "Cerré mi primer cliente de marca de 3.000 $ en la semana 5.",
-    "Pasé de hacer memes con IA a un retainer real.",
-    "Tres marcas me escribieron tras lanzar mi primera campaña.",
-    "Solo el módulo de criterio me cambió la forma de ver todo.",
-    "Mi pitch deck cerró en una sola llamada.",
-    "Por fin tengo un sistema, no solo un rollo.",
-  ],
-  memberLabel: "Miembro",
-  curEyebrow: "08 / Dentro de GIZMO STUDIO — Currículum",
-  curHeadA: "Nueve módulos. Valor total ",
-  curHeadB: "797 $.",
-  modules: [
-    "Fundamentos de la dirección con IA",
-    "Criterio y tesis visual",
-    "El stack de imagen",
-    "Movimiento y películas de campaña",
-    "Pipelines de automatización",
-    "Construir la oferta",
-    "Encontrar clientes",
-    "Pitch y cierre",
-    "Iguales y escalar",
-  ],
-  moduleLabel: "Módulo",
-  clubEyebrow: "09 / Club de Miembros GIZMO Studio",
-  clubHeadA: "Una sala privada para gente que ",
-  clubHeadB: "publica.",
-  clubItems: [
-    "Llamadas en directo cada semana — con grabaciones",
-    "GIZMO TV — drops, análisis y tutoriales",
-    "GIZMO Bot — tu copiloto de dirección con IA",
-    "Ranking, intercambio y sala de feedback",
-  ],
-  founderEyebrow: "POR GIZMO STUDIO",
-  founderHeadA: "Hola — somos ",
-  founderHeadB: "GIZMO STUDIO.",
-  founderHand: "dirigimos, publicamos y enseñamos el sistema detrás.",
-  founderBody:
-    "GIZMO STUDIO es un estudio de dirección creativa con IA. Construimos sistemas visuales para marcas y enseñamos el método dentro de este programa.",
-  pricingEyebrow: "10 / Precio",
-  pricingHeadA: "Asegura el precio ",
-  pricingHeadB: "fundador",
-  pricingHeadC: ".",
-  payFull: "Pago único",
-  paySplit: "4 pagos",
-  founding: "GIZMO STUDIO — Acceso fundador",
-  oneTime: "pago único",
-  monthly4: "× 4 mensuales",
-  wasFounding: " — solo cohorte fundadora.",
-  startNow: "Empieza ya →",
-  features: [
-    "9 módulos principales + 6 drops extra",
-    "Comunidad privada + ranking",
-    "Llamadas en directo cada semana con GIZMO STUDIO",
-    "Plantillas, prompts y kits de automatización",
-    "Programa para conseguir el primer cliente",
-    "Actualizaciones de por vida",
-  ],
-  faqEyebrow: "11 / Preguntas",
-  faqHeadA: "Preguntas frecuentes.",
-  faqs: [
-    ["¿Necesito experiencia?", "No — el currículum empieza desde cero y te lleva a un nivel listo para clientes."],
-    ["¿Cuánto dura el acceso?", "Acceso de por vida más todas las actualizaciones futuras."],
-    ["¿Qué herramientas necesito?", "Un portátil y un par de herramientas de IA de pago — el stack completo está dentro."],
-    ["¿Hay devolución?", "14 días de devolución, sin preguntas."],
-    ["¿Cuándo son las llamadas?", "Cada semana, con grabaciones disponibles en cualquier zona horaria."],
-    ["¿Se mantendrá este precio?", "No — el precio fundador termina cuando se llene la cohorte."],
-  ],
-  finalEyebrow: "POR GIZMO STUDIO",
-  finalA: "Tu primer cliente pagado ",
-  finalB: "ya está en el edificio.",
-  finalCTA: "Únete a GIZMO STUDIO →",
-  finalHand: " — solo cohorte fundadora.",
-  footerCopy: "© GIZMO STUDIO · Dirección Creativa con IA y Sistemas Visuales",
-  navTerms: "Términos",
-  navPrivacy: "Privacidad",
-  navRefund: "Devolución",
-  navContact: "Contacto",
-  navCurriculum: "Currículum",
-  navWork: "Trabajo",
-  navMembership: "Membresía",
-  navTestimonials: "Testimonios",
-  navPricing: "Precio",
-  navFAQ: "FAQ",
-  langWelcome: "Bienvenido",
-  langPick: "Elige tu idioma",
-  langRecommended: "Recomendado",
-} as Dict;
-
-const DICTS: Record<Lang, Dict> = { en: EN, es: ES };
+  finalEyebrow: "KARKA", finalA: "THIS IS ", finalB: "KARKA.", finalCTA: "DISCOVER KARKA.",
+  footerCopy: "Independent streetwear.", footerItems: ["Contact", "Social", "Legal information"], footerNotice: "Confirmed information before launch.",
+  navCollection: "Collection", navLookbook: "Lookbook", navAbout: "About", navFAQ: "FAQ",
+};
+const DICTS: Record<Lang, Dict> = { es: ES, en: EN };
 
 /* ---------- helpers ---------- */
 
-function Placeholder({
-  label,
-  className = "",
-  tone = "ink",
-  ratio = "aspect-[4/5]",
-  rotate = 0,
-  madeWithAI = "★ Made with AI",
-  src,
-  video,
-  showLabel = false,
-
-}: {
+function Placeholder({ label, className = "", ratio = "aspect-[4/5]", rotate = 0, decoration = false }: {
   label: string;
   className?: string;
-  tone?: "ink" | "cream" | "accent" | "chrome";
   ratio?: string;
   rotate?: number;
-  madeWithAI?: string;
-  src?: string;
-  video?: string;
-  showLabel?: boolean;
+  decoration?: boolean;
 }) {
-  const bg =
-    tone === "ink"
-      ? "bg-ink-3 text-bone"
-      : tone === "accent"
-        ? "bg-[var(--accent)] text-cream"
-        : tone === "chrome"
-          ? "bg-gradient-to-br from-chrome-start via-chrome-middle to-chrome-end text-[var(--ink)]"
-          : "bg-[var(--bone)] text-[var(--ink-3)]";
   return (
     <div
-      data-replace={src || video ? undefined : `image:${label}`}
+      role={decoration ? undefined : "img"}
+      aria-label={decoration ? undefined : label}
+      data-visual-placeholder={decoration ? undefined : "true"}
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
-      className={`relative overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ${ratio} ${bg} ${className}`}
+      className={`relative overflow-hidden rounded-2xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ${ratio} bg-bone text-ink-3 ${className}`}
     >
-      {video ? (
-        <video
-          src={video}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={label}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      ) : src ? (
-        <img
-          src={src}
-          alt={label}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      ) : (
-        <div className="absolute inset-0 grid place-items-center">
-          <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
-            {label}
-          </span>
-        </div>
-      )}
-      {(!(src || video) || showLabel) && (
-
-        <span className="absolute left-2 top-2 mono text-[9px] uppercase tracking-[0.22em] bg-cream/80 text-[var(--ink)] px-1.5 py-0.5 rounded">
-          {madeWithAI}
-        </span>
-      )}
+      {decoration && <img src={chromeAsset.url} alt="" className="absolute inset-0 h-full w-full object-cover" />}
     </div>
   );
 }
-
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -563,29 +144,14 @@ function Brand({ children, className = "" }: { children: React.ReactNode; classN
   return <span className={`brand ${className}`}>{children}</span>;
 }
 
-function useCountdown() {
-  const [target] = useState(() => Date.now() + 1000 * 60 * 60 * 47 + 1000 * 60 * 12);
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const i = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(i);
-  }, []);
-  const diff = Math.max(0, target - now);
-  const h = Math.floor(diff / 3.6e6);
-  const m = Math.floor((diff % 3.6e6) / 6e4);
-  const s = Math.floor((diff % 6e4) / 1000);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return { h: pad(h), m: pad(m), s: pad(s) };
-}
-
 /* ---------- language gate ---------- */
 function LanguageGate({ onPick }: { onPick: (l: Lang) => void }) {
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 backdrop-blur-md px-4">
       <div className="paper-surface relative w-full max-w-md rounded-3xl border-2 border-[var(--ink)] bg-[var(--cream)] p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]" style={textureStyle}>
         <div className="flex items-center gap-3">
-          <img src={gzLogo.url} alt="GZ Studio" className="h-10 w-10 rounded-md object-cover" />
-          <Brand className="text-xl">GIZMO STUDIO</Brand>
+
+          <Brand className="text-xl">KARKA</Brand>
         </div>
         <p className="mono mt-6 text-[10px] uppercase tracking-[0.22em] opacity-70">Bienvenido · Welcome</p>
         <h2 className="headline mt-3 text-4xl">Elige tu idioma / Choose language</h2>
@@ -614,43 +180,35 @@ function LanguageGate({ onPick }: { onPick: (l: Lang) => void }) {
 
 /* ---------- page ---------- */
 function Landing() {
-  const { h, m, s } = useCountdown();
-  const [plan, setPlan] = useState<"full" | "split">("full");
   const [lang, setLang] = useState<Lang | null>(null);
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("gz-lang") as Lang | null;
+      const stored = localStorage.getItem("karka-lang") as Lang | null;
       if (stored === "es" || stored === "en") setLang(stored);
     } catch {}
   }, []);
 
   const t = DICTS[lang ?? "es"];
 
+  useEffect(() => { document.documentElement.lang = lang ?? "es"; }, [lang]);
+
   const setLanguage = (l: Lang) => {
     setLang(l);
-    try { localStorage.setItem("gz-lang", l); } catch {}
+    try { localStorage.setItem("karka-lang", l); } catch {}
   };
 
   return (
-    <div className="min-h-screen bg-[var(--cream)] text-[var(--ink)] font-[family-name:var(--font-display)]">
+    <div id="top" className="min-h-screen bg-[var(--cream)] text-[var(--ink)] font-[family-name:var(--font-display)]">
       {lang === null && <LanguageGate onPick={setLanguage} />}
 
       {/* Sticky top header / countdown bar */}
       <div className="sticky top-0 z-50 px-3 pt-3">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[var(--cream)] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.4)]">
-          <a href="#" className="btn-glow flex items-center gap-2 rounded-full pl-1 pr-3 py-1">
-            <img src={gzLogo.url} alt="GZ Studio" className="h-8 w-8 rounded-full object-cover ring-1 ring-cream/10" />
-            <Brand className="hidden sm:inline text-base tracking-tight">GIZMO STUDIO</Brand>
+          <a href="#top" className="btn-glow flex items-center gap-2 rounded-full pl-1 pr-3 py-1">
+
+            <Brand className="text-base tracking-tight">KARKA</Brand>
           </a>
-          <div className="flex items-center gap-3 text-[11px]">
-            <span className="hidden md:inline mono uppercase tracking-[0.18em] opacity-70">
-              {t.countdownLabel}
-            </span>
-            <span className="mono tabular-nums text-[var(--accent)] font-bold text-[13px]">
-              {h}:{m}:{s}
-            </span>
-          </div>
           <div className="flex items-center gap-2">
             {/* lang switcher */}
             <div className="flex items-center rounded-full bg-cream/10 p-0.5 text-[10px] mono uppercase tracking-[0.18em]">
@@ -667,14 +225,12 @@ function Landing() {
               ))}
             </div>
             <a
-              href="#pricing"
+              href="#collection"
               className="btn-glow rounded-full bg-[var(--accent)] px-3 sm:px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-cream"
             >
-              {t.joinNow}
+              {t.navCollection}
             </a>
-            <a href="#" className="btn-glow hidden sm:inline rounded-full px-2 py-1 mono text-[10px] uppercase tracking-[0.22em] opacity-70 hover:opacity-100">
-              {t.login}
-            </a>
+
           </div>
         </div>
       </div>
@@ -692,10 +248,10 @@ function Landing() {
           <div className="grid gap-10 pb-24 pt-10 lg:grid-cols-12 lg:gap-6">
             <div className="lg:col-span-8 relative">
               <div className="hidden lg:block absolute -left-6 top-24 w-40">
-                <Placeholder label="campaign 01" src={SHOWCASE[0]} ratio="aspect-[3/4]" tone="ink" rotate={-6} madeWithAI={t.madeWithAI} showLabel />
+                <Placeholder label={t.visualLabel} ratio="aspect-[3/4]" rotate={-6} />
               </div>
               <div className="hidden lg:block absolute -right-10 -top-2 w-36">
-                <Placeholder label="chrome 02" src={CHROME[0]} ratio="aspect-square" tone="chrome" rotate={8} madeWithAI={t.madeWithAI} />
+                <Placeholder label="" decoration ratio="aspect-square" rotate={8} />
               </div>
 
               <h1 className="headline text-[14vw] sm:text-[11vw] lg:text-[9.2vw]">
@@ -713,30 +269,29 @@ function Landing() {
                   <path d="M28 10 L34 14 L30 20" />
                 </svg>
                 <p className="hand text-4xl sm:text-5xl text-[var(--ink-2)] leading-tight">
-                  {t.heroHand1}<span className="text-[var(--accent)]">{t.heroHand2}</span>{t.heroHand3}
+                  {t.heroSupport}
                 </p>
               </div>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <a
-                  href="#pricing"
+                  href="#collection"
                   className="btn-glow group inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-4 text-sm font-bold uppercase tracking-[0.18em] text-cream shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
                 >
-                  {t.ctaLockIn}
+                  {t.heroCTA}
                   <span className="transition-transform group-hover:translate-x-1">→</span>
                 </a>
-                <span className="hand text-2xl text-[var(--ink-3)]">{t.trusted}</span>
               </div>
             </div>
 
             <aside className="lg:col-span-4 grid grid-cols-2 gap-3 content-start">
               <div className="col-span-2">
-                <Placeholder label="Hero video" video={VID.hero} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} showLabel />
+                <Placeholder label={t.visualLabel} ratio="aspect-[4/5]" />
               </div>
-              <Placeholder label="still 03" src={SHOWCASE[1]} ratio="aspect-square" tone="chrome" rotate={-3} madeWithAI={t.madeWithAI} />
-              <Placeholder label="editorial 04" src={SHOWCASE[2]} ratio="aspect-square" tone="ink" rotate={3} madeWithAI={t.madeWithAI} />
+              <Placeholder label={t.visualLabel} ratio="aspect-square" rotate={-3} />
+              <Placeholder label={t.visualLabel} ratio="aspect-square" rotate={3} />
               <p className="col-span-2 mono text-[10px] uppercase tracking-[0.22em] opacity-60">
-                <Brand>{t.byGizmoSub}</Brand>
+                <Brand>{t.brandTag}</Brand>
               </p>
             </aside>
           </div>
@@ -744,13 +299,13 @@ function Landing() {
           <div className="overflow-hidden border-y border-[var(--ink)]/15 py-3">
             <div className="marquee-track-fast">
               {Array.from({ length: 2 }).flatMap((_, k) =>
-                ["campaign 01", "still 02", "model 03", "product 04", "editorial 05", "fashion 06"].map(
-                  (l, i) => (
+                Array.from({ length: 6 }).map(
+                  (_, i) => (
                     <div key={`${k}-${i}`} className="flex items-center gap-3">
                       <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">
-                        {t.madeWithAI}
+                        KARKA
                       </span>
-                      <Placeholder label={l} src={SHOWCASE[(k * 6 + i) % SHOWCASE.length]} ratio="aspect-[4/3]" className="h-16 w-24 shadow-none" tone="ink" madeWithAI={t.madeWithAI} />
+                      <Placeholder label={t.visualLabel} ratio="aspect-[4/3]" className="h-16 w-24 shadow-none" />
                     </div>
                   ),
                 ),
@@ -763,12 +318,12 @@ function Landing() {
       {/* SECTION — barriers gone (BLACK) */}
       <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.barriersEyebrow}</Eyebrow>
+          <Eyebrow>{t.introEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-5xl text-5xl sm:text-7xl lg:text-8xl">
-            {t.barriersHeadA}<span className="text-[var(--accent)]">{t.barriersHeadB}</span>
+            {t.introHeadA}<span className="text-[var(--accent)]">{t.introHeadB}</span>
           </h2>
           <ul className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {t.barriers.map((b, i) => (
+            {t.concepts.map((b, i) => (
               <li key={b} className="border-t border-[var(--line-dark)] pt-6">
                 <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                   0{i + 1}
@@ -778,25 +333,25 @@ function Landing() {
             ))}
           </ul>
           <p className="hand mt-16 max-w-3xl text-5xl text-[var(--cream)]/85 leading-tight">
-            {t.barriersHand1}<span className="text-[var(--accent)]">{t.barriersHand2}</span>{t.barriersHand3}
+            {t.heroSupport}
           </p>
         </div>
       </section>
 
       {/* Capability grid */}
-      <section className="paper-surface py-24" style={textureStyle}>
+      <section id="collection" className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.capEyebrow}</Eyebrow>
-          <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">{t.capHead}</h2>
+          <Eyebrow>{t.collectionEyebrow}</Eyebrow>
+          <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">{t.collectionHead}</h2>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {t.capItems.map((c, i) => (
-              <div key={c} className="btn-glow group relative overflow-hidden rounded-2xl">
-                <Placeholder label={c} src={CANT_TELL.concat(SHOWCASE)[i % CANT_TELL.concat(SHOWCASE).length]} ratio="aspect-square" tone={i % 3 === 0 ? "chrome" : "ink"} madeWithAI={t.madeWithAI} />
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-ink/80 to-transparent p-3 text-cream">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="btn-glow group relative overflow-hidden rounded-2xl">
+                <Placeholder label={t.visualLabel} ratio="aspect-square" />
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-ink/80 p-3 text-cream">
                   <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                     0{i + 1}
                   </span>
-                  <span className="font-bold text-lg">{c}</span>
+                  <span className="font-bold text-lg">{t.collectionLabel}</span>
                 </div>
               </div>
             ))}
@@ -804,77 +359,15 @@ function Landing() {
         </div>
       </section>
 
-      {/* Comparison */}
-      <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.cmpEyebrow}</Eyebrow>
-          <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
-            {t.cmpHeadA}<span className="text-[var(--accent)]">{t.cmpHeadB}</span>{t.cmpHeadC}
-          </h2>
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-3xl border border-[var(--line-dark)] p-8">
-              <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">
-                {t.cmpMostCreators}
-              </span>
-              <ul className="mt-6 space-y-4 text-xl">
-                {t.cmpMost.map((x) => (
-                  <li key={x} className="flex gap-3 items-start">
-                    <span className="text-accent-secondary text-2xl leading-none">✕</span>
-                    <span className="line-through opacity-60">{x}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="paper-surface rounded-3xl bg-[var(--cream)] p-8 text-[var(--ink)]" style={textureStyle}>
-              <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
-                {t.cmpBrands}
-              </span>
-              <ul className="mt-6 space-y-4 text-xl">
-                {t.cmpGood.map((x) => (
-                  <li key={x} className="flex gap-3 items-start">
-                    <span className="text-[var(--accent)] font-bold">✓</span>
-                    <span className="font-medium">{x}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trusted by marquee */}
-      <section className="paper-surface border-y border-[var(--ink)]/15 py-10" style={textureStyle}>
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.trustedBy}</Eyebrow>
-          <div className="mt-6 overflow-hidden">
-            <div className="marquee-track items-center">
-              {Array.from({ length: 2 }).flatMap((_, k) =>
-                Array.from({ length: 8 }).map((_, i) => (
-                  <div
-                    key={`${k}-${i}`}
-                    className="grid h-12 w-36 place-items-center rounded border border-[var(--ink)]/15 bg-cream/40 backdrop-blur"
-                    data-replace={`logo:placeholder-${i}`}
-                  >
-                    <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-60">
-                      Brand {i + 1}
-                    </span>
-                  </div>
-                )),
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Four moves */}
       <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.methodEyebrow}</Eyebrow>
+          <Eyebrow>{t.designEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
-            {t.methodHeadA}<span className="text-[var(--accent)]">{t.methodHeadB}</span>
+            {t.designHeadA}<span className="text-[var(--accent)]">{t.designHeadB}</span>
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {t.moves.map((mv, i) => (
+            {t.principles.map((mv, i) => (
               <div
                 key={mv.t}
                 className="btn-glow rounded-2xl border border-[var(--line-dark)] p-6 transition-transform hover:-translate-y-1"
@@ -891,91 +384,35 @@ function Landing() {
       </section>
 
       {/* Member work */}
-      <section className="paper-surface py-24" style={textureStyle}>
+      <section id="lookbook" className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.workEyebrow}</Eyebrow>
+          <Eyebrow>{t.lookbookEyebrow}</Eyebrow>
           <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
-            {t.workHeadA}<span className="text-[var(--accent)]">{t.workHeadB}</span>
+            {t.lookbookHeadA}<span className="text-[var(--accent)]">{t.lookbookHeadB}</span>
           </h2>
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {STUDENT_VIDEOS.map((v, i) => (
+            {Array.from({ length: 3 }).map((_, i) => (
               <Placeholder
-                key={v}
-                video={v}
-                label={`${t.memberLabel} ${t.madeWithAI}`}
+                key={`motion-${i}`}
+
+                label={`${t.memberLabel} $KARKA`}
                 ratio={i === 0 ? "aspect-[3/4]" : "aspect-square"}
-                tone="ink"
-                madeWithAI={t.madeWithAI}
+               
+               
               />
             ))}
-            {STUDENTS.map((src, i) => (
+            {Array.from({ length: 9 }).map((_, i) => (
 
               <Placeholder
-                key={src}
-                src={src}
-                label={`${t.memberLabel} ${i + 1}`}
+                key={`still-${i}`}
+
+                label={t.lookbookLabel}
                 ratio={i % 3 === 0 ? "aspect-[3/4]" : "aspect-square"}
-                tone={i % 2 ? "ink" : "chrome"}
-                madeWithAI={t.madeWithAI}
+               
+               
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.testEyebrow}</Eyebrow>
-          <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
-            <span className="text-[var(--accent)]">"</span>{t.testHead}<span className="text-[var(--accent)]">"</span>
-          </h2>
-          <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
-            {t.testQuotes.map((q, i) => (
-              <figure key={q} className="btn-glow rounded-2xl border border-[var(--line-dark)] p-6">
-                <span className="text-[var(--accent)] text-4xl leading-none">"</span>
-                <blockquote className="mt-2 text-xl font-medium leading-snug">{q}</blockquote>
-                <figcaption className="mono mt-4 text-[10px] uppercase tracking-[0.22em] opacity-60">
-                  {t.memberLabel} {i + 1}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {TESTIMONIALS.concat(PROOF).map((src, i) => (
-              <img
-                key={src}
-                src={src}
-                alt={`${t.memberLabel} ${i + 1}`}
-                loading="lazy"
-                className="w-full rounded-xl border border-[var(--line-dark)] object-cover"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Curriculum */}
-      <section className="paper-surface py-24" style={textureStyle}>
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-          <Eyebrow>{t.curEyebrow}</Eyebrow>
-          <h2 className="headline mt-6 max-w-4xl text-5xl sm:text-7xl">
-            {t.curHeadA}<span className="line-through opacity-50">$997</span>{" "}
-            <span className="text-[var(--accent)]">{t.curHeadB}</span>
-          </h2>
-          <ol className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {t.modules.map((mod, i) => (
-              <li
-                key={mod}
-                className="btn-glow rounded-2xl border border-[var(--ink)]/15 bg-cream/50 backdrop-blur p-5"
-              >
-                <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
-                  {t.moduleLabel} 0{i + 1}
-                </span>
-                <p className="mt-2 text-2xl font-bold">{mod}</p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
@@ -983,19 +420,19 @@ function Landing() {
       <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Placeholder label="GIZMO Studio dashboard" video={VID.studioDashboard} ratio="aspect-square" tone="chrome" madeWithAI={t.madeWithAI} />
+            <Placeholder label={t.visualLabel} ratio="aspect-square" />
             <div className="mt-3">
-              <Placeholder label="GIZMO Studio org chart" video={VID.studioOrgchart} ratio="aspect-square" tone="ink" madeWithAI={t.madeWithAI} />
+              <Placeholder label={t.visualLabel} ratio="aspect-square" />
             </div>
 
           </div>
           <div className="lg:col-span-7">
-            <Eyebrow>{t.clubEyebrow}</Eyebrow>
+            <Eyebrow>{t.releaseEyebrow}</Eyebrow>
             <h2 className="headline mt-6 text-5xl sm:text-7xl">
-              {t.clubHeadA}<span className="text-[var(--accent)]">{t.clubHeadB}</span>
+              {t.releaseHeadA}<span className="text-[var(--accent)]">{t.releaseHeadB}</span>
             </h2>
             <ul className="mt-10 space-y-4 text-lg">
-              {t.clubItems.map((x) => (
+              {t.releaseItems.map((x) => (
                 <li key={x} className="flex gap-3 items-start border-t border-[var(--line-dark)] pt-4">
                   <span className="text-[var(--accent)] font-bold">✓</span>
                   <span>{x}</span>
@@ -1007,91 +444,24 @@ function Landing() {
       </section>
 
       {/* Founder */}
-      <section className="paper-surface py-24" style={textureStyle}>
+      <section id="about" className="paper-surface py-24" style={textureStyle}>
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6 grid gap-10 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5">
-            <Placeholder label="Founder portrait" src={IMG["photos__who_am_i__wolf-founder.webp"]} ratio="aspect-[4/5]" tone="ink" madeWithAI={t.madeWithAI} />
+            <Placeholder label={t.visualLabel} ratio="aspect-[4/5]" />
           </div>
           <div className="lg:col-span-7">
-            <Eyebrow><Brand>{t.founderEyebrow}</Brand></Eyebrow>
+            <Eyebrow><Brand>{t.aboutEyebrow}</Brand></Eyebrow>
             <h2 className="headline mt-6 text-4xl sm:text-6xl">
-              {t.founderHeadA}<Brand className="text-[var(--accent)]">{t.founderHeadB}</Brand>
+              {t.aboutHeadA}<Brand className="text-[var(--accent)]">{t.aboutHeadB}</Brand>
             </h2>
-            <p className="hand mt-6 text-4xl text-[var(--ink-2)] leading-tight">{t.founderHand}</p>
-            <p className="mt-6 text-lg leading-relaxed opacity-80">{t.founderBody}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="paper-surface py-24" style={textureStyle}>
-        <div className="mx-auto max-w-[1100px] px-4 sm:px-6">
-          <div className="text-center">
-            <Eyebrow>{t.pricingEyebrow}</Eyebrow>
-            <h2 className="headline mt-6 text-5xl sm:text-7xl">
-              {t.pricingHeadA}<span className="text-[var(--accent)]">{t.pricingHeadB}</span>{t.pricingHeadC ?? " price."}
-            </h2>
-          </div>
-
-          <div className="mx-auto mt-10 flex w-full justify-center">
-            <div className="inline-flex rounded-full border border-[var(--ink)]/20 bg-cream/60 backdrop-blur p-1">
-              {(["full", "split"] as const).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPlan(p)}
-                  className={`btn-glow rounded-full px-5 py-2 text-xs font-bold uppercase tracking-[0.18em] transition-colors ${
-                    plan === p
-                      ? "bg-[var(--ink)] text-[var(--cream)]"
-                      : "text-[var(--ink-3)]"
-                  }`}
-                >
-                  {p === "full" ? t.payFull : t.paySplit}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-10 rounded-3xl border-2 border-[var(--ink)] bg-cream p-10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.4)]">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <div>
-                <span className="mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
-                  <Brand>{t.founding}</Brand>
-                </span>
-                <div className="mt-3 flex items-baseline gap-3">
-                  <span className="text-7xl font-black tracking-tight">
-                    {plan === "full" ? "$399" : "$219"}
-                  </span>
-                  <span className="text-xl opacity-60 font-medium">
-                    {plan === "full" ? t.oneTime : t.monthly4}
-                  </span>
-                </div>
-                <p className="hand mt-2 text-3xl text-[var(--ink-3)]">
-                  <span className="line-through">$997</span>{t.wasFounding}
-                </p>
-              </div>
-              <a
-                href="#"
-                data-replace="link:stripe-checkout"
-                className="btn-glow inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-cream shadow-[0_8px_0_0_var(--ink)] hover:translate-y-[2px] hover:shadow-[0_4px_0_0_var(--ink)]"
-              >
-                {t.startNow}
-              </a>
-            </div>
-
-            <ul className="mt-10 grid gap-3 border-t border-[var(--ink)]/10 pt-8 sm:grid-cols-2">
-              {t.features.map((f) => (
-                <li key={f} className="flex gap-3">
-                  <span className="text-[var(--accent)] font-bold">✓</span>
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
+            <p className="hand mt-6 text-4xl text-[var(--ink-2)] leading-tight">{t.aboutHand}</p>
+            <p className="mt-6 text-lg leading-relaxed opacity-80">{t.aboutBody}</p>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="bg-[var(--ink)] py-24 text-[var(--cream)]">
+      <section id="faq" className="bg-[var(--ink)] py-24 text-[var(--cream)]">
         <div className="mx-auto max-w-[900px] px-4 sm:px-6">
           <Eyebrow>{t.faqEyebrow}</Eyebrow>
           <h2 className="headline mt-6 text-5xl sm:text-7xl">{t.faqHeadA}</h2>
@@ -1116,13 +486,13 @@ function Landing() {
             {t.finalA}<span className="text-[var(--accent)]">{t.finalB}</span>
           </h2>
           <a
-            href="#pricing"
+            href="#collection"
             className="btn-glow mt-12 inline-flex items-center gap-3 rounded-full bg-[var(--ink)] px-10 py-5 text-sm font-bold uppercase tracking-[0.2em] text-[var(--cream)] shadow-[0_10px_0_0_var(--accent)] hover:translate-y-[2px] hover:shadow-[0_5px_0_0_var(--accent)]"
           >
             <Brand className="text-base">{t.finalCTA}</Brand>
           </a>
           <p className="hand mt-6 text-3xl text-[var(--ink-3)]">
-            <span className="line-through">$997</span>{t.finalHand}
+            {t.heroSupport}
           </p>
         </div>
       </section>
@@ -1131,16 +501,14 @@ function Landing() {
       <footer className="paper-surface border-t border-[var(--ink)]/15 py-12 bg-[var(--cream)]" style={textureStyle}>
         <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 pb-20">
           <div className="flex items-center gap-3">
-            <img src={gzLogo.url} alt="GZ Studio" className="h-9 w-9 rounded-md object-cover" />
+
             <span className="mono text-[10px] uppercase tracking-[0.22em] opacity-70">
-              <Brand className="mr-2 text-sm tracking-normal opacity-100">GIZMO STUDIO</Brand>· {t.footerCopy.replace(/^© GIZMO STUDIO · /, "").replace(/^© GIZMO STUDIO · /i, "")}
+              <Brand className="mr-2 text-sm tracking-normal opacity-100">KARKA</Brand>· {t.footerCopy}
             </span>
           </div>
           <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.22em] opacity-70">
-            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:terms">{t.navTerms}</a>
-            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:privacy">{t.navPrivacy}</a>
-            <a href="#" className="btn-glow secondary-glow rounded px-1" data-replace="link:refund">{t.navRefund}</a>
-            <a href="mailto:hello@example.com" className="btn-glow secondary-glow rounded px-1" data-replace="link:contact">{t.navContact}</a>
+            {t.footerItems.map(item => <span key={item}>{item}</span>)}
+            <span className="w-full mono text-[10px]">{t.footerNotice}</span>
           </div>
         </div>
       </footer>
@@ -1148,29 +516,22 @@ function Landing() {
       {/* Floating bottom nav pill */}
       <div className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4">
         <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-[var(--line-dark)] bg-[var(--ink)]/95 p-1.5 text-[var(--cream)] shadow-2xl backdrop-blur">
-          <Brand className="px-3 py-2 text-base text-[var(--accent)]">GIZMO</Brand>
+          <Brand className="px-3 py-2 text-base text-[var(--accent)]">KARKA</Brand>
           {[
-            [t.navCurriculum, "#"],
-            [t.navWork, "#"],
-            [t.navMembership, "#"],
-            [t.navTestimonials, "#"],
-            [t.navPricing, "#pricing"],
-            [t.navFAQ, "#"],
+            [t.navCollection, "#collection"],
+            [t.navLookbook, "#lookbook"],
+            [t.navAbout, "#about"],
+            [t.navFAQ, "#faq"],
           ].map(([l, h]) => (
             <a
               key={l}
               href={h}
-              className="btn-glow secondary-glow hidden sm:inline rounded-full px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] hover:bg-cream/10"
+              className="btn-glow secondary-glow rounded-full px-1 sm:px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] hover:bg-cream/10"
             >
               {l}
             </a>
           ))}
-          <a
-            href="#pricing"
-            className="btn-glow ml-1 rounded-full bg-[var(--accent)] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-cream"
-          >
-            {t.joinNow}
-          </a>
+
         </div>
       </div>
     </div>
